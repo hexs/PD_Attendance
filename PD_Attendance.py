@@ -12,7 +12,8 @@ if 'config.json' in os.listdir():
 else:
     config = {
         'ID': '',
-        'Emp': ''
+        'Emp': '',
+        'Directory': ''
     }
     with open('config.json', 'w') as f:
         f.write(json.dumps(config, indent=4))
@@ -49,7 +50,7 @@ class PD_Attendance:
             html_table = soup.find('table', {'id': 'ctl00_ContentPlaceHolder1_GridView1'})
 
             df = pd.read_html(StringIO(str(html_table)), header=0)[0]
-            pd_attendance_dir = os.path.join(os.path.dirname(__file__), 'PD_Attendance')
+            pd_attendance_dir = os.path.join(config['Directory'], 'PD_Attendance')
             os.makedirs(pd_attendance_dir, exist_ok=True)
             df.to_csv(os.path.join(pd_attendance_dir, f'{month_and_year}.csv'), index=False, encoding='utf-8')
 

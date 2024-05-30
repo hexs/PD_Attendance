@@ -1,9 +1,11 @@
+import json
 import os
 from git import Repo
 
-
+with open('config.json') as f:
+    config = json.loads(f.read())
 def update_git():
-    repo = Repo(os.path.dirname(__file__))
+    repo = Repo(config['Directory'])
 
     pull = repo.git.pull('origin', 'main')
     print(pull)
@@ -22,7 +24,7 @@ def update_git():
 
 
 def if_status_change_add_commit_push():
-    repo = Repo(os.path.dirname(__file__))
+    repo = Repo(config['Directory'])
     status = repo.git.status()
 
     if status.split('\n')[-1] != 'nothing to commit, working tree clean':
