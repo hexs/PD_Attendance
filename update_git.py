@@ -19,5 +19,16 @@ def update_git():
         push = repo.git.push('origin', 'main')
         print(push)
 
+def if_status_change_add_commit_push():
+    repo = Repo(os.path.dirname(__file__))
+    status = repo.git.status()
+
+    if status.split('\n')[-1] != 'nothing to commit, working tree clean':
+        print('add / commit / push')
+        repo.git.add('.')
+        repo.git.commit('-am', 'auto update')
+        push = repo.git.push('origin', 'main')
+        print(push)
+
 if __name__ == '__main__':
     update_git()
