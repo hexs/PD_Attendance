@@ -4,6 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 from io import StringIO
+from update_git import update_git
 
 if 'config.json' in os.listdir():
     with open('config.json') as f:
@@ -56,6 +57,12 @@ class PD_Attendance:
         view_state_to_csv_('http://it-src-sv:1213/HRMS_ViewItYourself/Z_PD/PD_Attendance_Last.aspx')
 
 
-attendance = PD_Attendance()
-attendance.log_in()
-attendance.view_state_to_csv()
+def main():
+    attendance = PD_Attendance()
+    attendance.log_in()
+    attendance.view_state_to_csv()
+    update_git()
+
+
+if __name__ == '__main__':
+    main()
