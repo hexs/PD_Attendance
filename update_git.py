@@ -26,13 +26,12 @@ def if_status_change_add_commit_push():
     status = repo.git.status()
 
     if status.split('\n')[-1] != 'nothing to commit, working tree clean':
-        print('add / commit / push', '- -' * 30, sep='\n')
         add = repo.git.add('.')
-        print(add, '- -' * 30, sep='\n')
+        print('add', add, '- -' * 30, sep='\n')
         commit = repo.git.commit('-am', 'auto update')
-        print(commit, '- -' * 30, sep='\n')
+        print('commit', commit, '- -' * 30, sep='\n')
         push = repo.git.push('origin', 'main')
-        print(push, '- -' * 30, sep='\n')
+        print('push', push, '- -' * 30, sep='\n')
 
 
 if __name__ == '__main__':
