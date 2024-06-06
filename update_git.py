@@ -47,7 +47,7 @@ def if_status_change_add_commit_push():
             print('push', push, '- -' * 30, sep='\n')
         except Exception as e:
             if 'fatal: Authentication failed for' in str(e):
-                repo.git.remote('remove', 'origin')
+                repo.git.remote('remove', 'github')
 
                 users = psutil.users()
                 user_name = (users[0].name)
