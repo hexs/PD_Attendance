@@ -13,7 +13,6 @@ def pull():
     print(pull)
 
 
-
 def if_status_change_add_commit_push():
     repo = Repo(config['Directory'])
     status = repo.git.status()
@@ -33,14 +32,22 @@ def if_status_change_add_commit_push():
     try:
         push = repo.git.push('origin', 'main')
         print('push', push, '- -' * 30, sep='\n')
+
+    # if Authentication failed key หมดอายุ
     except Exception as e:
         if 'fatal: Authentication failed for' in str(e):
-            repo.git.remote('remove', 'origin')
-
             users = psutil.users()
             user_name = (users[0].name)
             with open(rf'C:\Users\{user_name}\Documents\remote_origin_url.txt') as f:
                 new_url = f.read().replace('<project_name>', 'PD_Attendance')
+
+            # remote remote origin
+            try:
+                repo.git.remote('remove', 'origin')
+            except:
+                pass
+
+            # remote add origin
             repo.git.remote('add', 'origin', new_url)
 
             push = repo.git.push('origin', 'main')
