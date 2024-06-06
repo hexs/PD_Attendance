@@ -38,8 +38,9 @@ def if_status_change_add_commit_push():
         if 'fatal: Authentication failed for' in str(e):
             users = psutil.users()
             user_name = (users[0].name)
-            with open(rf'C:\Users\{user_name}\Documents\remote_origin_url.txt') as f:
-                new_url = f.read().replace('<project_name>', 'PD_Attendance')
+            with open(rf'C:\Users\{user_name}\Documents\git_config.json') as f:
+                git_config = json.loads(f.read())
+            new_url = f"https://zxjq:{git_config['tokens']}@github.com/hexs/PD_Attendance.git"
 
             # remote remote origin
             try:
