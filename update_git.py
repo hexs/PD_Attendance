@@ -7,23 +7,11 @@ with open('config.json') as f:
     config = json.loads(f.read())
 
 
-def update_git():
+def pull():
     repo = Repo(config['Directory'])
-
     pull = repo.git.pull('origin', 'main')
     print(pull)
-    print('- -' * 30)
 
-    status = repo.git.status()
-    print(status)
-    print('- -' * 30)
-
-    if status.split('\n')[-1] != 'nothing to commit, working tree clean':
-        print('add / commit / push')
-        repo.git.add('.')
-        repo.git.commit('-am', 'auto update')
-        push = repo.git.push('origin', 'main')
-        print(push)
 
 
 def if_status_change_add_commit_push():
