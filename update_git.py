@@ -47,16 +47,16 @@ def if_status_change_add_commit_push():
             print('push', push, '- -' * 30, sep='\n')
         except Exception as e:
             if 'fatal: Authentication failed for' in str(e):
-                print(555)
-                remote_origin_url = repo.git.config('--get', 'remote.origin.url')
-                print(remote_origin_url)
+                repo.git.remote('remove', 'origin')
 
                 users = psutil.users()
                 user_name = (users[0].name)
                 with open(rf'C:\Users\{user_name}\Documents\remote_origin_url.txt') as f:
                     new_url = f.read().replace('<project_name>', 'PD_Attendance')
-                remote_origin_url = repo.git.remote('set-url', 'origin', new_url)
-                print('new remote origin url', remote_origin_url)
+                repo.git.remote('add', 'github', new_url)
+
+                push = repo.git.push('origin', 'main')
+                print('push', push, '- -' * 30, sep='\n')
 
 
 if __name__ == '__main__':
