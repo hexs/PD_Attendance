@@ -30,21 +30,21 @@ def if_status_change_add_commit_push():
         commit = repo.git.commit('-am', f'auto update {v.strip()}')
         print('commit', commit, '- -' * 30, sep='\n')
 
-        try:
+    try:
+        push = repo.git.push('origin', 'main')
+        print('push', push, '- -' * 30, sep='\n')
+    except Exception as e:
+        if 'fatal: Authentication failed for' in str(e):
+            repo.git.remote('remove', 'origin')
+
+            users = psutil.users()
+            user_name = (users[0].name)
+            with open(rf'C:\Users\{user_name}\Documents\remote_origin_url.txt') as f:
+                new_url = f.read().replace('<project_name>', 'PD_Attendance')
+            repo.git.remote('add', 'origin', new_url)
+
             push = repo.git.push('origin', 'main')
             print('push', push, '- -' * 30, sep='\n')
-        except Exception as e:
-            if 'fatal: Authentication failed for' in str(e):
-                repo.git.remote('remove', 'origin')
-
-                users = psutil.users()
-                user_name = (users[0].name)
-                with open(rf'C:\Users\{user_name}\Documents\remote_origin_url.txt') as f:
-                    new_url = f.read().replace('<project_name>', 'PD_Attendance')
-                repo.git.remote('add', 'origin', new_url)
-
-                push = repo.git.push('origin', 'main')
-                print('push', push, '- -' * 30, sep='\n')
 
 
 if __name__ == '__main__':
